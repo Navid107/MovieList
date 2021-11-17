@@ -20,9 +20,9 @@ async function profile(req, res){
     // Then find all the posts that belong to that user
     if(!user) return res.status(404).json({err: 'User not found'})
 
-    const posts = await Post.find({user: user._id}).populate("user").exec();
-    console.log(posts, ' this posts')
-    res.status(200).json({posts: posts, user: user})
+    // const posts = await Post.find({user: user._id}).populate("user").exec();
+    // console.log(posts, ' this posts')
+    res.status(200).json({user: user})
   } catch(err){
     console.log(err)
     res.status(400).json({err})
@@ -30,7 +30,7 @@ async function profile(req, res){
 }
 
 async function signup(req, res) {
-  console.log(req.body, req.file, " <req.body, req.file in our signup, because we have multer");
+  console.log(req.body,  " <req.body, req.file in our signup, because we have multer");
 
   // generate a unique fileName
   const filePath = `${uuidv4()}/${req.file.originalname}`;

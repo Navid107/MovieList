@@ -7,10 +7,10 @@ import userService from "../../utils/userService";
 
 
 export default function ProfilePage(props) {
-  const [posts, setPosts] = useState([]);
+//   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState({});
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+//   const [loading, setLoading] = useState(true);
 
   // This variable name is coming from the route definition in app.js
   const { username } = useParams();
@@ -24,9 +24,9 @@ export default function ProfilePage(props) {
   async function getProfile() {
     try {
       const data = await userService.getProfile(username);
-      setPosts(data.posts);
+    //   setPosts(data.posts);
       setUser(data.user);
-      setLoading(false);
+    //   setLoading(false);
     } catch (err) {
       setError(err.message);
     }
@@ -39,9 +39,9 @@ export default function ProfilePage(props) {
     return <ErrorMessage error={error} />;
   }
 
-  if (loading) {
-    return <Loading />;
-  }
+//   if (loading) {
+//     return <Loading />;
+//   }
 
   return (
     <Grid centered>
@@ -52,13 +52,13 @@ export default function ProfilePage(props) {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column style={{ maxWidth: 750 }}>
-          <PostFeed
+          {/* <PostFeed
             isProfile={true}
             posts={posts}
             numPhotosCol={3}
             user={props.user}
 			
-          />
+          /> */}
         </Grid.Column>
       </Grid.Row>
     </Grid>
