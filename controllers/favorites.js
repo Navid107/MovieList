@@ -10,9 +10,11 @@ async function favorite(req, res) {
 
     try {
       const post = await Post.create({
-        user: req.user
+        userId: req.user._id, 
+        favorite: JSON.stringify(req.body)
       });
-
+      post.favorite = JSON.parse(post.favorite)
+      
       res.status(201).json({ post: post });
     } catch (err) {
       res.status(400).json({ err });
