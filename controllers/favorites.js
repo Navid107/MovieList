@@ -1,4 +1,5 @@
 const Favorite = require("../models/favorites");
+const User = require("../models/user")
 
 module.exports = {
   favorite,
@@ -24,14 +25,11 @@ async function favorite(req, res) {
 async function index(req, res) {
  
   try {
-    console.log(req.body, 'index console.log');
-    // this populates the user when you find the posts
-    // so you'll have access to the users information
-    // when you fetch teh posts
-    const posts = await Favorite.find({}).populate("userId");
+    const user = await User.findById(req.user._id)
+    const posts = await Favorite.find({userId: user._id});
     res.status(200).json({ posts: posts });
   } catch (err) {
-    console.log('posts didnt work')
-    res.status(400).json({ err });
+    console.log(err)
+    res.status(400).json( err );
   }
 }

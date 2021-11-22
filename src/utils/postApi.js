@@ -29,7 +29,7 @@ export function getAll() {
 		console.log(res,'3th console.log')
 		// Valid login if we have a status of 2xx (res.ok)
 		if (res.ok) return res.json();
-		throw new Error('bad Credentials');
+		throw new Error(res);
 	  })
   }
 
