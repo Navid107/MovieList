@@ -11,6 +11,11 @@ export default function ProfileBio({ user }) {
     try {
       console.log('this is addfavorite')
       const data = await postApi.getAll();
+      if(!data.post){
+        throw new Error(data)
+      }
+      const {posts} = data
+      console.log(data,"this is data")
       setPosts([...data.posts]);
 
     } catch (err) {

@@ -27,6 +27,7 @@ async function index(req, res) {
   try {
     const user = await User.findById(req.user._id)
     const posts = await Favorite.find({userId: user._id});
+    
     res.status(200).json({ posts: posts });
   } catch (err) {
     console.log(err)
