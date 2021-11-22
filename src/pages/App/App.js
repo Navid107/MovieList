@@ -47,7 +47,7 @@ function App() {
       let result = data;
 
       console.log(result);
-
+      result.id = id;
       setState(prevState => {
         return { ...prevState, selected: result }
       });
