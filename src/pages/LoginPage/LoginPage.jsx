@@ -3,6 +3,7 @@ import "./LoginPage.css";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import userService from "../../utils/userService";
 import {useNavigate, Link } from "react-router-dom";
+import PageHeader from "../../components/Header/Header";
 import {
   Button,
   Form,
@@ -12,6 +13,7 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+
 
 export default function LoginPage(props) {
   const [error, setError] = useState("");
@@ -44,7 +46,9 @@ export default function LoginPage(props) {
   }
 
   return (
+    
     <>
+    <PageHeader />
       <Grid
         textAlign="center"
         style={{ height: "100vh" }}
@@ -52,7 +56,7 @@ export default function LoginPage(props) {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="teal" textAlign="center">
-            <Image src="https://i.imgur.com/s4LrnlU.png" /> Log-in to your
+            <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GjIOHDyTuCXf6qgU-pcNDqtjGx6L0QiloA&usqp=CAU" /> Log-in to your
             account
           </Header>
           <Form autoComplete="off" onSubmit={handleSubmit}>

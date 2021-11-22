@@ -1,16 +1,17 @@
 import React, { useState }  from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
+import {favorite} from '../../utils/postApi'
 import ProfilePage from "../ProfilePage/ProfilePage";
 import userService from "../../utils/userService";
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import Protected from '../../components/Protected/Protected';
 import axios from 'axios'
-
+import PageHeader from '../../components/Header/Header'
 import SearchForMovie from '../../components/SearchForMovie/SearchForMovie'
 import Results from '../../components/Results/Results'
-import Detail from '../../components/Detail/Detail'
+import Detail  from '../../components/Detail/Detail'
 
 function App() {
   const [state, setState] = useState({
@@ -24,6 +25,7 @@ function App() {
     if (e.key === "Enter") {
       axios(apiurl + "&s=" + state.s).then(({ data }) => {
         let results = data.Search;
+        
 
         setState(prevState => {
           return { ...prevState, results: results }
@@ -41,7 +43,7 @@ function App() {
   }
 
   const openDetail = id => {
-    axios(apiurl + "&i=" + id).then(({ data }) => {
+    axios('http://www.omdbapi.com/' + "?i=" + id + '&apikey=d2d13be').then(({ data }) => {
       let result = data;
 
       console.log(result);
@@ -50,6 +52,7 @@ function App() {
         return { ...prevState, selected: result }
       });
     });
+    console.log(id, '<--- this is my id')
   }
 
   const closeDetail = () => {
@@ -57,7 +60,18 @@ function App() {
       return { ...prevState, selected: {} }
     });
   }
+  
+  async function addToFavorite(){
+    console.log(state.selected)
+    try{
+      const response = await favorite(state.selected);
+      console.log(response)
 
+    } catch(err){
+
+    }
+    
+  }
   // decode our jwt token
   const [user, setUser] = useState(userService.getUser());
   // store the payload, aka the users infor in state
@@ -76,18 +90,21 @@ function App() {
 
 if (user) {
   return (
+
     <Routes>
-      <Route path="/" element={ 
-      <div className="App">
-      <header>
-        <h1>Search For your favorite Movie</h1>
-      </header>
+      
+      <Route
+       path="/" element={ 
+      <div className="App">  
+      <PageHeader user={user} handleLogout={handleLogout} />  
       <main>
         <SearchForMovie handleInput={handleInput} search={search} />
 
         <Results results={state.results} openDetail={openDetail} />
 
-        {(typeof state.selected.Title != "undefined") ? <Detail selected={state.selected} closeDetail={closeDetail} /> : false}
+        {(typeof state.selected.Title != "undefined") ?
+            <Detail selected={state.selected} closeDetail={closeDetail}
+            addToFavorite={addToFavorite} /> : false}
       </main>
     </div>
       }>
