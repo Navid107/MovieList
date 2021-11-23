@@ -54,7 +54,7 @@ export default function ProfilePage(props) {
 				<br />
 				<img src={Poster}/> */}
         <Detail selected={favorite.favorite} closeDetail={props.closeDetail}
-         remove={props.removeFavorite} addToFavorite={props.addToFavorite} />
+         remove={props.remove} addToFavorite={props.addToFavorite} />
 			</li>
 		)
 	})

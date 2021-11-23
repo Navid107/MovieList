@@ -116,14 +116,6 @@ function App() {
 			return err
     }
   }
-	async function removeFavorite(uniqueId){
-    try{
-      const response = await favorite(state.selected);
-    } catch(err){
-			console.log(err)
-			return err
-    }
-  }
   // decode our jwt token
   const [user, setUser] = useState(userService.getUser());
   // store the payload, aka the users infor in state
@@ -155,7 +147,7 @@ if (user) {
 							{(typeof state.selected.Title != "undefined") ?
 								<Detail favorites={favorites} selected={state.selected} closeDetail={closeDetail}
 									addToFavorite={addToFavorite}
-									removeFavorite={removeFavorite}
+									remove={removeHandler}
 							/> : false}
 						</main>
 					</div>
@@ -174,12 +166,12 @@ if (user) {
         <Route path="/:username" element={<Protected user={user}>
           <ProfilePage user={user}
          favorites={favorites} closeDetail={closeDetail}
-         openDetail={openDetail} removeFavorite={removeFavorite} addToFavorite={addToFavorite}/>
+         openDetail={openDetail} remove={removeHandler} addToFavorite={addToFavorite}/>
          
          {(typeof state.selected.Title != "undefined") ?
 								<Detail favorites={favorites} selected={state.selected} closeDetail={closeDetail}
 									addToFavorite={addToFavorite}
-									removeFavorite={removeFavorite}
+									remove={removeHandler}
 							/> : false}
          
          
