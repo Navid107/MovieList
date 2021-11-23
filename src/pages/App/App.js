@@ -95,7 +95,9 @@ function App() {
 			console.log(exists, id, '<--- this is my id')
       setState(prevState => {
         return { ...prevState, selected: result }
+        
       });
+      console.log(state)
     });
   }
 
@@ -153,7 +155,7 @@ if (user) {
 							{(typeof state.selected.Title != "undefined") ?
 								<Detail favorites={favorites} selected={state.selected} closeDetail={closeDetail}
 									addToFavorite={addToFavorite}
-									remove={removeHandler}
+									removeFavorite={removeFavorite}
 							/> : false}
 						</main>
 					</div>
@@ -169,7 +171,19 @@ if (user) {
           path="/signup"
           element={<SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />}
         />
-        <Route path="/:username" element={<Protected user={user}><ProfilePage user={user} favorites={favorites} /></Protected>} />
+        <Route path="/:username" element={<Protected user={user}>
+          <ProfilePage user={user}
+         favorites={favorites} closeDetail={closeDetail}
+         openDetail={openDetail} removeFavorite={removeFavorite} addToFavorite={addToFavorite}/>
+         
+         {(typeof state.selected.Title != "undefined") ?
+								<Detail favorites={favorites} selected={state.selected} closeDetail={closeDetail}
+									addToFavorite={addToFavorite}
+									removeFavorite={removeFavorite}
+							/> : false}
+         
+         
+         </Protected>} />
       
     </Routes>
   );

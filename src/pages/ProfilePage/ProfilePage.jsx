@@ -4,6 +4,11 @@ import PageHeader from "../../components/Header/Header";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import userService from "../../utils/userService";
+import Detail from "../../components/Detail/Detail";
+import { favorite } from "../../utils/postApi";
+import Results2 from "../../components/Results/Results2";
+import FoundMovie from "../../components/FoundMovie/FoundMovie";
+
 
 
 
@@ -32,22 +37,25 @@ export default function ProfilePage(props) {
       setError(err.message);
     }
   }
+  
 
   // Always check the error before loading, because if there is an error
   // we know something went wrong with the fetch call, therefore the http request
   // is complete
 
 
-  const { favorites } = props
-
-	const favoritesMap = favorites.map(({favorite: {Title, Poster, ...rest}, ...doc})=> {
-		console.log(rest, doc)
+  const  favorites  = props.favorites
+  console.log(favorites)
+	const favoritesMap = favorites.map((favorite, index)=> {
+		
 		return(
-			<>
-				{Title}
+    <li key={index}>
+				{/* {Title}
 				<br />
-				<img src={Poster}/>
-			</>
+				<img src={Poster}/> */}
+        <Detail selected={favorite.favorite} closeDetail={props.closeDetail}
+         remove={props.removeFavorite} addToFavorite={props.addToFavorite} />
+			</li>
 		)
 	})
 	return(
@@ -55,7 +63,8 @@ export default function ProfilePage(props) {
       <PageHeader user={user}/>
 			my faves 
 			<br />
-			{favoritesMap}
+      <Results2 results={favorites} openDetail={props.openDetail}/>
+      
 		</main>
 	)
 }

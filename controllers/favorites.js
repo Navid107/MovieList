@@ -35,7 +35,7 @@ async function index(req, res) {
     const user = await User.findById(req.user._id)
     const posts = await Favorite.find({userId: user._id});
     const newPosts = posts.map(post => {
-      const favoriteObject = JSON.parse(post.favorite)
+      const favoriteObject = post.favorite
 			return {...post, favorite: favoriteObject }
 		})
     res.status(200).json({ posts: newPosts });

@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Detail({ selected, closeDetail, addToFavorite, remove }) {
+	console.log(selected)
 	return (
 		<section className="detail">
 			<div className="content">
