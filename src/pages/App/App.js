@@ -1,7 +1,7 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
-import {favorite} from '../../utils/postApi'
+import {favorite, getAll, remove } from '../../utils/postApi'
 import ProfilePage from "../ProfilePage/ProfilePage";
 import userService from "../../utils/userService";
 import SignupPage from '../SignupPage/SignupPage';
@@ -19,14 +19,53 @@ function App() {
     results: [],
     selected: {}
   });
+
+  const [favorites, setFavorites] = useState([]);
+
+	async function removeHandler(){
+		try{
+			console.log(state.selected)
+			const {id} = state.selected 
+			const response = await remove(id)
+			if(response.data === 'good'){
+				const copyFavorites = [...favorites].filter(element => element.favorite.id !== id)
+				setFavorites(copyFavorites)
+				const newSelected = {...state.selected}
+				newSelected.favorited = false
+				setState({...state, selected: newSelected})
+			}
+			console.log(response)
+		}catch(err){
+			console.log(err)
+		}
+	}
+
+  async function fetchFavorites() {
+    try {
+      const data = await getAll();
+      if(data instanceof Error){
+        throw new Error(data)
+      }
+			if(data && data.posts){
+				setFavorites(data.posts);
+			}
+
+    } catch (err) {
+
+      console.log(err, " this is the error");
+    }
+  }
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
   const apiurl = "http://www.omdbapi.com/?i=tt3896198&apikey=d2d13be";
 
   const search = (e) => {
     if (e.key === "Enter") {
       axios(apiurl + "&s=" + state.s).then(({ data }) => {
         let results = data.Search;
-        
-
         setState(prevState => {
           return { ...prevState, results: results }
         })
@@ -45,14 +84,19 @@ function App() {
   const openDetail = id => {
     axios('http://www.omdbapi.com/' + "?i=" + id + '&apikey=d2d13be').then(({ data }) => {
       let result = data;
-
       console.log(result);
-      result.id = id;
+      result.id = id
+			//is id in favorites?
+			//http://localhost:3000/
+			const exists = favorites.find(movie => movie.favorite.id === id)
+			if(exists){
+				result.favorited = true
+			}
+			console.log(exists, id, '<--- this is my id')
       setState(prevState => {
         return { ...prevState, selected: result }
       });
     });
-    console.log(id, '<--- this is my id')
   }
 
   const closeDetail = () => {
@@ -62,15 +106,21 @@ function App() {
   }
   
   async function addToFavorite(){
-    console.log(state.selected)
     try{
       const response = await favorite(state.selected);
-      console.log(response)
-
+			setState({...state, selected: { ...state.selected, favorited: true }})
     } catch(err){
-
+			console.log(err)
+			return err
     }
-    
+  }
+	async function removeFavorite(uniqueId){
+    try{
+      const response = await favorite(state.selected);
+    } catch(err){
+			console.log(err)
+			return err
+    }
   }
   // decode our jwt token
   const [user, setUser] = useState(userService.getUser());
@@ -93,23 +143,23 @@ if (user) {
 
     <Routes>
       
-      <Route
-       path="/" element={ 
-      <div className="App">  
-      <PageHeader user={user} handleLogout={handleLogout} />  
-      <main>
-        <SearchForMovie handleInput={handleInput} search={search} />
+			<Route
+				path="/" element={ 
+					<div className="App">  
+						<PageHeader user={user} handleLogout={handleLogout} />  
+						<main>
+							<SearchForMovie handleInput={handleInput} search={search} />
+							<Results results={state.results} openDetail={openDetail} />
+							{(typeof state.selected.Title != "undefined") ?
+								<Detail favorites={favorites} selected={state.selected} closeDetail={closeDetail}
+									addToFavorite={addToFavorite}
+									remove={removeHandler}
+							/> : false}
+						</main>
+					</div>
+				}>
+			</Route>
 
-        <Results results={state.results} openDetail={openDetail} />
-
-        {(typeof state.selected.Title != "undefined") ?
-            <Detail selected={state.selected} closeDetail={closeDetail}
-            addToFavorite={addToFavorite} /> : false}
-      </main>
-    </div>
-      }>
-        </Route>
-        
         <Route
           path="/login"
           element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}
@@ -119,7 +169,7 @@ if (user) {
           path="/signup"
           element={<SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />}
         />
-        <Route path="/:username" element={<Protected user={user}><ProfilePage user={user} /></Protected>} />
+        <Route path="/:username" element={<Protected user={user}><ProfilePage user={user} favorites={favorites} /></Protected>} />
       
     </Routes>
   );

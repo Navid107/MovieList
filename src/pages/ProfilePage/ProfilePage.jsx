@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "semantic-ui-react";
-import ProfileBio from "../../components/ProfileBio/ProfileBio";
+import PageHeader from "../../components/Header/Header";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import userService from "../../utils/userService";
+
 
 
 export default function ProfilePage(props) {
@@ -35,32 +36,26 @@ export default function ProfilePage(props) {
   // Always check the error before loading, because if there is an error
   // we know something went wrong with the fetch call, therefore the http request
   // is complete
-  if (error) {
-    return <ErrorMessage error={error} />;
-  }
 
-//   if (loading) {
-//     return <Loading />;
-//   }
 
-  return (
-    <Grid centered>
-      <Grid.Row>
-        <Grid.Column>
-          <ProfileBio user={user} />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column style={{ maxWidth: 750 }}>
-          {/* <PostFeed
-            isProfile={true}
-            posts={posts}
-            numPhotosCol={3}
-            user={props.user}
-			
-          /> */}
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  );
+  const { favorites } = props
+
+	const favoritesMap = favorites.map(({favorite: {Title, Poster, ...rest}, ...doc})=> {
+		console.log(rest, doc)
+		return(
+			<>
+				{Title}
+				<br />
+				<img src={Poster}/>
+			</>
+		)
+	})
+	return(
+		<main>
+      <PageHeader user={user}/>
+			my faves 
+			<br />
+			{favoritesMap}
+		</main>
+	)
 }
