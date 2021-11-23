@@ -17,3 +17,4 @@ your favorite movies and series with others
 
 ### You can remove the more if you open the detail page 
 
+Trello https://trello.com/b/LpXAMZkL/movielist#
