@@ -1,0 +1,55 @@
+.container {
+    background-color: rgb(235, 230, 230);
+}
+
+.sign__in {
+    width: 50%;
+    text-align: center;
+    display: inline-block;
+    background: rgb(70, 72, 73);
+
+}
+
+.ui>.button {
+    background-color: rgb(106, 93, 181);
+    color: aliceblue;
+}
+
+.ui.message  {
+    font-size: 1rem;
+    text-align: center;
+    display: inline-block;
+    margin: 1em 0;
+    line-height: 1.4285em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: bisque;
+
+
+}
+
+form {
+    text-align: center;
+    background: rgb(226, 210, 210);
+
+}
+
+.ui.header {
+    text-align: center;
+    color: rgb(101, 41, 212);
+}
+
+.form {
+    border-radius: 100%;
+}
+
+.ui>.sign__in {
+    border-radius: 20px;
+    background-color: rgb(28, 99, 143);
+}
+
+.ui.header{
+    color: black;
+}

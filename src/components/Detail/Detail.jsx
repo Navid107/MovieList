@@ -1,7 +1,9 @@
+import { AppConfig } from 'aws-sdk'
 import React from 'react'
 
 export default function Detail({ selected, closeDetail, addToFavorite, remove }) {
 	console.log(selected)
+	
 	return (
 		<section className="detail">
 			<div className="content">
@@ -23,12 +25,11 @@ export default function Detail({ selected, closeDetail, addToFavorite, remove })
 						{selected.Plot}	
 					</p>
 
-
 				</div>
 				<button className="close" onClick={closeDetail}>Close</button>
 				{!selected.favorited
-					? <button className="favoritBtn" onClick={addToFavorite}>Favorite</button>
-					: <button className="favoritBtn" onClick={remove}>Remove</button>
+					? <button className="favoritBtn" onClick={addToFavorite}>Favorite</button> 
+					: <button className="favoritBtn" onClick={remove}>Remove</button>	 					 
 				}
 
 			</div>

@@ -23,7 +23,14 @@ async function favorite(req, res) {
 }
 async function remove(req, res){
 	try{
-		await Favorite.deleteOne({ _id: req.body.uniqueId })
+		const { postToRemove } = req.body
+		const regex = new RegExp(postToRemove)
+		const user = await User.findOne({email: req.user.email })
+		const fav = await Favorite.findOne({ favorite: regex,  userId: user._id })
+		if(fav.length === 0){
+			throw new Error('no post found')
+		}
+		const deleted = await Favorite.deleteOne({ _id: fav._id })
 		res.status(200).json({data: 'good'})
 	}catch(err){
 		res.status(400).json(err)

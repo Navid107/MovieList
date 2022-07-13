@@ -135,12 +135,11 @@ function App() {
 if (user) {
   return (
 
-    <Routes>
-      
+    <Routes>    
 			<Route
 				path="/" element={ 
 					<div className="App">  
-						<PageHeader user={user} handleLogout={handleLogout} />  
+						<PageHeader className="user"user={user} handleLogout={handleLogout} />  
 						<main>
 							<SearchForMovie handleInput={handleInput} search={search} />
 							<Results results={state.results} openDetail={openDetail} />
@@ -183,12 +182,12 @@ if (user) {
 
 return (
   <Routes>
-    <Route
+    <Route className="login__page"
       path="/login"
       element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}
     />
 
-    <Route
+    <Route className='signup__page'
       path="/signup"
       element={<SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />}
     />

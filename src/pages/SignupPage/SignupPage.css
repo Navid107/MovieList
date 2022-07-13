@@ -1,0 +1,16 @@
+.ui.header {
+   color: black;
+}
+.ui.header:first-child{
+    margin-top: 5%;
+}
+.ui.header:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: 2rem;
+}
+
+.ui.segment {
+    border-radius: 1%;
+    width: 100;
+    display: inline-block;
+    background-color: antiquewhite;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './SignupPage.css';
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 import userService from "../../utils/userService";
@@ -66,10 +67,9 @@ export default function SignUpPage(props) {
   }
 
   return (
-    <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" color="teal" textAlign="center">
-          <Image src="https://i.imgur.com/s4LrnlU.png" /> Sign Up
+    <>
+        <Header>
+          <Image src="https://www.transparentpng.com/thumb/movie/gray-movie-written-icon-png-UpaYYD.png" /> Sign Up
         </Header>
         <Form autoComplete="off" onSubmit={handleSubmit}>
           <Segment stacked>
@@ -117,6 +117,7 @@ export default function SignUpPage(props) {
                 name="photo"
                 placeholder="upload image"
                 onChange={handleFileInput}
+                required
               />
             </Form.Field>
             <Button type="submit" className="btn">
@@ -125,7 +126,6 @@ export default function SignUpPage(props) {
           </Segment>
           {error ? <ErrorMessage error={error} /> : null}
         </Form>
-      </Grid.Column>
-    </Grid>
+     </>
   );
 }

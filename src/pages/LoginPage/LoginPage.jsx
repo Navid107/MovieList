@@ -7,7 +7,6 @@ import PageHeader from "../../components/Header/Header";
 import {
   Button,
   Form,
-  Grid,
   Header,
   Image,
   Message,
@@ -46,21 +45,13 @@ export default function LoginPage(props) {
   }
 
   return (
-    
     <>
-    <PageHeader />
-      <Grid
-        textAlign="center"
-        style={{ height: "100vh" }}
-        verticalAlign="middle"
-      >
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
-            <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GjIOHDyTuCXf6qgU-pcNDqtjGx6L0QiloA&usqp=CAU" /> Log-in to your
-            account
+          <Header>
+            Welcome to Movie List App <br></br>
+             Please Login 
           </Header>
-          <Form autoComplete="off" onSubmit={handleSubmit}>
-            <Segment stacked>
+          <Form className="form" autoComplete="off" onSubmit={handleSubmit}>
+            <Segment className="sign__in">
               <Form.Input
                 type="email"
                 name="email"
@@ -77,24 +68,17 @@ export default function LoginPage(props) {
                 onChange={handleChange}
                 required
               />
-              <Button
-                color="teal"
-                fluid
-                size="large"
-                type="submit"
-                className="btn"
-              >
+              <Button>
                 Login
               </Button>
             </Segment>
           </Form>
-          <Message>
-            New to us? <Link to="/signup">Sign Up</Link>
+          <Message className="sign__upp">
+            Register <Link to="/signup">Sign Up</Link>
           </Message>
           {error ? <ErrorMessage error={error} /> : null}
-        </Grid.Column>
-      </Grid>
-    </>
+       
+   </>
   );
 }
 

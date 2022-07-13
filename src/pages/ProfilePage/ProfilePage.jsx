@@ -61,7 +61,7 @@ export default function ProfilePage(props) {
 	return(
 		<main>
       <PageHeader user={user}/>
-			my faves 
+			
 			<br />
       <Results2 results={favorites} openDetail={props.openDetail}/>
       
