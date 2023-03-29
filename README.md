@@ -20,7 +20,7 @@ your favorite movies and series with others
 
 ### You can remove the more if you open the detail page 
 
-Trello https://trello.com/b/LpXAMZkL/movielist#
+Trello: https://trello.com/b/LpXAMZkL/movielist#
 
 Heroku link https://movieandlist.herokuapp.com/
 
